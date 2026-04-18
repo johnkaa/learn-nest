@@ -4,9 +4,28 @@ import { AppService } from './app.service';
 import { TaskModule } from './task/task.module';
 import { MovieModule } from './movie/movie.module';
 import { UserModule } from './user/user.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { getTypeOrmConfig } from './config/typeorm.config';
+import { ReviewModule } from './review/review.module';
+import { ActorModule } from './actor/actor.module';
 
 @Module({
-  imports: [TaskModule, MovieModule, UserModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: getTypeOrmConfig,
+      inject: [ConfigService],
+    }),
+    TaskModule,
+    MovieModule,
+    UserModule,
+    ReviewModule,
+    ActorModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
