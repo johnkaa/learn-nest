@@ -1,21 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ActorEntity } from './entities/actor.entity';
-import { Repository } from 'typeorm';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateActorDto } from './dto/create-actor.dto';
+import { Actor } from 'generated/prisma/client';
 
 @Injectable()
 export class ActorService {
-  constructor(
-    @InjectRepository(ActorEntity)
-    private readonly actorRepository: Repository<ActorEntity>,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  async create(dto: CreateActorDto): Promise<ActorEntity> {
+  async create(dto: CreateActorDto): Promise<Actor> {
     const { name } = dto;
-
-    const actor = this.actorRepository.create({ name });
-
-    return await this.actorRepository.save(actor);
+    return this.prismaService.actor.create({
+      data: {
+        name,
+      },
+    });
   }
 }
