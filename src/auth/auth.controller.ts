@@ -22,7 +22,6 @@ import {
 import { AuthResponse } from './dto/auth.dto';
 import { Authorization } from './decorators/authorization.decorator';
 import { Authorized } from './decorators/authorized.decorator';
-import type { User } from 'generated/prisma/client';
 
 @Controller('auth')
 export class AuthController {

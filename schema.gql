@@ -1,0 +1,13 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UsergModel {
+  id: Float!
+  username: String!
+  email: String!
+}
+
+type Query {
+  getUsers: [UsergModel!]!
+}
